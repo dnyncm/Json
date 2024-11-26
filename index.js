@@ -12,9 +12,10 @@ const recipeJSON =
 const readRecipe = JSON.parse(recipeJSON)
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+let number = "";
 
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  res.render("index.ejs", {data: readRecipe[number]});
 });
 
 app.post("/recipe", (req, res) => {
@@ -28,10 +29,11 @@ app.post("/recipe", (req, res) => {
       return 2
     }
   }
-  let number = num(req.body.choice);
+  number = num(req.body.choice);
   
   //Step 3: send recipe.
-  res.render("index.ejs", {data: readRecipe[number]})
+  
+  res.redirect("/");
   
   //Step 4: Add code to views/index.ejs to use the recieved recipe object.
 });
